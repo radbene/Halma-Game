@@ -1,6 +1,5 @@
-from board import Board
-from pawn import Pawn
+import game
 
-board = Board()
-print(board.can_move(3,1))
-print(board)
+if __name__ == "__main__":
+    g = game.Game("X","Y")
+    g.start_game()

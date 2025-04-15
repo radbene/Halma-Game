@@ -6,10 +6,11 @@ class MoveValidator():
         self.board = board
 
     def field_is_free(self, i: int, j: int):
-        return not isinstance(self.board.fields[i][j], Pawn)
+        occupied = self.board.get_occupied_fields()
+        return not (i,j) in occupied
 
     def field_is_in_bounds(self, i: int, j: int):
-        if i < 0 or i >= self.board.n or j < 0 or j >= self.board.n:
+        if i < 0 or i >= self.board.size or j < 0 or j >= self.board.size:
             return False
         return True
 
@@ -47,6 +48,4 @@ class MoveValidator():
                     legal_moves.append((x,y))
                     jumps.append([(x, y), dir])
 
-        for pos in legal_moves:
-            self.board.fields[pos[0]][pos[1]] = "1"
         return legal_moves
