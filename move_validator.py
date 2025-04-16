@@ -1,5 +1,4 @@
 from board import Board
-from pawn import Pawn
 
 class MoveValidator():
     def __init__(self, board: Board):

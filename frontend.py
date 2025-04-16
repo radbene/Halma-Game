@@ -1,7 +1,9 @@
 import pygame
+from sympy.codegen.ast import continue_
+
 from move_validator import MoveValidator
 
-TILE_SIZE = 40
+TILE_SIZE = 50
 PADDING = 4
 WHITE = (255, 255, 255)
 GRAY = (200, 200, 200)
@@ -10,12 +12,14 @@ BLUE = (0, 0, 255)
 RED = (255, 0, 0)
 
 class Frontend:
-    def __init__(self, board):
+    def __init__(self, board,difficulty, mode):
         self.board = board
+        self.difficulty = difficulty
+        self.mode = mode
         self.mv = MoveValidator(board)
         self.selected = None
         self.possible_moves = None
-        self.current_player = 1
+        self.current_player = 0
         self.screen = pygame.display.set_mode((board.size * TILE_SIZE, board.size * TILE_SIZE))
 
     def draw_board(self):
@@ -49,10 +53,14 @@ class Frontend:
 
     def handle_click(self, pos, player_pawns):
         x, y = pos[0] // TILE_SIZE, pos[1] // TILE_SIZE
+        print("X: {x}  Y: {y}".format(x=x, y=y))
         if self.selected:
             if (x,y) in self.possible_moves:
                 self.board.move_pawn(self.selected[0], self.selected[1], x, y)
-                self.current_player = 2 if self.current_player == 1 else 1
+                if self.mode == "PvP":
+                    self.current_player = (self.current_player + 1) % 2
+                elif self.mode == "PvE":
+                    a = 1
                 self.selected = None
                 self.possible_moves = None
             else:

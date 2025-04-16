@@ -36,17 +36,13 @@ class Button:
         return False
 
 def show_menu():
-    # Przyciski
-    difficulties = [
-        Button("Łatwy", 50, 50, 150, 50),
-        Button("Średni", 50, 120, 150, 50),
-        Button("Trudny", 50, 190, 150, 50)
-    ]
 
     modes = [
-        Button("PvP", 400, 50, 150, 50),
-        Button("PvE", 400, 120, 150, 50)
+        Button("PvP", 50, 50, 150, 50),
+        Button("PvE", 50, 120, 150, 50)
     ]
+
+    difficulties = []
 
     selected_difficulty = None
     selected_mode = None
@@ -54,6 +50,17 @@ def show_menu():
     running = True
     while running:
         screen.fill(WHITE)
+
+        if selected_mode == "PvE":
+
+            difficulties = [
+                Button("Easy", 400, 50, 150, 50),
+                Button("Medium", 400, 120, 150, 50),
+                Button("Hard", 400, 190, 150, 50)
+            ]
+
+        elif selected_mode == "PvP":
+            break
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -79,7 +86,6 @@ def show_menu():
         # Jeśli oba wybrane, zapisz i zakończ
         if selected_difficulty and selected_mode:
             print("Ustawienia zapisane.")
-            pygame.time.wait(1000)
             running = False
 
 
