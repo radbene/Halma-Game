@@ -2,21 +2,15 @@ import pygame
 from sympy.codegen.ast import continue_
 
 from move_validator import MoveValidator
+from constants import *
 
-TILE_SIZE = 50
-PADDING = 4
-WHITE = (255, 255, 255)
-GRAY = (200, 200, 200)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
-RED = (255, 0, 0)
 
 class Frontend:
     def __init__(self, board,difficulty, mode):
         self.board = board
         self.difficulty = difficulty
         self.mode = mode
-        self.mv = MoveValidator(board)
+        self.mv = MoveValidator(board.p1_pawns_fields, board.p2_pawns_fields)
         self.selected = None
         self.possible_moves = None
         self.current_player = 0
@@ -44,7 +38,7 @@ class Frontend:
             sel_rect = pygame.Rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
             pygame.draw.rect(self.screen, RED, sel_rect, 3)
 
-            self.possible_moves = self.mv.can_move(x,y)
+            self.possible_moves = self.mv.pawn_possible_moves(x, y)
             for a,b in self.possible_moves:
                 rect = pygame.Rect(a * TILE_SIZE, b * TILE_SIZE, TILE_SIZE, TILE_SIZE)
                 pygame.draw.rect(self.screen, GREEN, rect, 3)

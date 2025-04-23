@@ -25,9 +25,6 @@ class Board():
 
 #TODO: fix enums
 
-    def get_occupied_fields(self) -> set[tuple[int, int]]:
-        return self.p1_pawns_fields | self.p2_pawns_fields
-
     def __str__(self):
         representation = ""
         for row in self.fields:

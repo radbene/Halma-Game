@@ -1,19 +1,31 @@
-from board import Board
-
+from constants import *
 class MoveValidator():
-    def __init__(self, board: Board):
-        self.board = board
+    def __init__(self, pawns: set[tuple[int, int]], opponent_pawns: set[tuple[int, int]]):
+        self.pawns = pawns
+        self.opponent_pawns = opponent_pawns
+
+    def get_all_moves(self,is_first_player: bool):
+        if is_first_player:
+            moves = {pawn: self.pawn_possible_moves(*pawn) for pawn in self.pawns}
+        else:
+            moves = {pawn:self.pawn_possible_moves(*pawn) for pawn in self.opponent_pawns}
+
+        return moves
+
+
+    def get_occupied_fields(self) -> set[tuple[int, int]]:
+        return self.pawns | self.opponent_pawns
 
     def field_is_free(self, i: int, j: int):
-        occupied = self.board.get_occupied_fields()
+        occupied = self.get_occupied_fields()
         return not (i,j) in occupied
 
     def field_is_in_bounds(self, i: int, j: int):
-        if i < 0 or i >= self.board.size or j < 0 or j >= self.board.size:
+        if i < 0 or i >= BOARD_SIZE or j < 0 or j >= BOARD_SIZE:
             return False
         return True
 
-    def can_move(self, i: int, j: int):
+    def pawn_possible_moves(self, i: int, j: int):
         if self.field_is_free(i, j):
             print("This field is not a Pawn!")
             return []
@@ -47,4 +59,4 @@ class MoveValidator():
                     legal_moves.append((x,y))
                     jumps.append([(x, y), dir])
 
-        return legal_moves
+        return legal_moves[::-1]    #sorted from furthest to closest

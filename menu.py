@@ -1,17 +1,12 @@
 import pygame
+from constants import *
 
 pygame.init()
 
 # Ustawienia okna
-WIDTH, HEIGHT = 600, 400
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Wybór trybu gry")
 
-# Kolory
-WHITE = (255, 255, 255)
-GRAY = (200, 200, 200)
-DARK_GRAY = (100, 100, 100)
-BLACK = (0, 0, 0)
 
 # Font
 font = pygame.font.SysFont(None, 36)
